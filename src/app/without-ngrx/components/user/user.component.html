@@ -1,0 +1,8 @@
+<p>user works!</p>
+<div *ngIf="user$ | async as user; else loading">
+  {{ user.name }}: {{ user.age }}
+</div>
+
+<ng-template #loading>
+  Loading...
+</ng-template>

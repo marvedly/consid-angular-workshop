@@ -1,0 +1,29 @@
+<p>user with ngrx works!</p>
+<div *ngIf="user$ | async as user">
+  {{ user.name }} ({{ user.age }}): {{ user.hobbies | formatArrayWithDots }}
+</div>
+<div class="error" *ngIf="loadUserError$ | async as error">
+  {{ error }}
+</div>
+<div *ngrxLet="loadingUser$; let loadingUser">
+<!--  <div>Loading user: {{ loadingUser }}</div>-->
+  <div *ngIf="loadingUser">Loading user...</div>
+</div>
+<div *ngIf="(loadingUser$ | async) as loadingUser">
+  Loading user {{loadUserFormGroup.value.id}}: {{ loadingUser }}
+</div>
+
+<form [formGroup]="loadUserFormGroup">
+  <input type="text" formControlName="id">
+  <button (click)="loadUser()"
+          [disabled]="loadUserFormGroup.invalid"
+          type="submit">
+    Load User
+  </button>
+</form>
+
+<app-hobbies
+  *ngIf="user$ | async as user"
+  [header]="'Hobbyrubrik'"
+  (alertHobbies)="updateHobbies($event)"
+></app-hobbies>
